@@ -11,6 +11,19 @@ function printQuestionMarks(num) {
   return arr.toString();
 }
 
+// Helper function for SQL syntax.
+function objToSql(ob) {
+  var arr = [];
+
+  for (var key in ob) {
+    if (Object.hasOwnProperty.call(ob, key)) {
+      arr.push(key + "=" + ob[key]);
+    }
+  }
+
+  return arr.toString();
+}
+
 var orm = {
     selectAll: function(callback) {
         var queryString = "SELECT * FROM burgers";
@@ -23,7 +36,7 @@ var orm = {
         });
     },
     insertOne: function(burgerName, callback) {
-        var insertString = "INSERT INTO burgers (burger_name, devoured) VALUES ('?', '0')";
+        var insertString = "INSERT INTO burgers (burger_name, devoured) VALUES (?, '0')";
         connection.query(insertString, [burgerName], function(err, result) {
             if (err) {
                 throw err;
